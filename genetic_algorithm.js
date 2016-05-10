@@ -51,7 +51,7 @@ var evolve = function(pop,retain,random_select,mutate/*,target,,mutate*/){
 	for(invidual in regrouped){
 		
 		if(random_select > Math.random()){
-			console.log("some random inviduals added");
+			//console.log("some random inviduals added");
 			parents.push(regrouped[invidual]);
 		}
 	}
@@ -60,7 +60,7 @@ var evolve = function(pop,retain,random_select,mutate/*,target,,mutate*/){
 
 	for(invidual in parents){
 		if(mutate>Math.random()){
-			console.log("mutation happens");
+			//console.log("mutation happens");
 			pos_to_mutate = Math.round(Math.random()*(parents[invidual].length-1));
 			parents[invidual][pos_to_mutate] = Math.floor( Math.random() * ((Math.max(...parents[invidual])-Math.min(...parents[invidual]))+1) + Math.min(...parents[invidual]) )
 		}
@@ -77,17 +77,17 @@ var braker = 0
 		if(braker>500){
 			break;
 		}
-		var male = Math.round(Math.random()*(parents_length-1)),
-			female = Math.round(Math.random()*(parents_length-1));
+		var male_pos = Math.round(Math.random()*(parents_length-1)),
+			female_pos = Math.round(Math.random()*(parents_length-1));
 		//console.log("cl: "+children.length+ " x: "+desired_length+" y: "+parents_length )
 		
-		if(male!=female){
-			male = parents[male];
-			female = parents[female];
+		if(male_pos!=female_pos){
+			var	male = parents[male_pos],
+				female = parents[female_pos],
 			//console.log(female)
-			half = female.length/2;
-			child = male.slice(half).concat(female.slice(0,half))
-			children.push(child)
+				half = female.length/2,
+				child = male.slice(half).concat(female.slice(0,half));
+				children.push(child)
 		}
 
 
@@ -109,8 +109,12 @@ pop = population(p_count,i_length);
 
 console.log(grade(pop,target));
 
-for(var i=0;i<500;i++){
+for(var i=0;i<1000;i++){
 	//console.log(i)
 	pop = evolve(pop,0.2,0.05,0.01);
 	console.log(grade(pop,target));
 }
+
+window.onload = function(){
+		//alert('x')
+	}
